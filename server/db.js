@@ -2,7 +2,6 @@ const {MongoClient} = require('mongodb');
 
 async function main(){
    
-    // const uri = "mongodb+srv://root:battery99@localhost:/?retryWrites=true&w=majority";
     const uri = "mongodb://localhost:27017";
 
     const client = new MongoClient(uri);
@@ -18,7 +17,7 @@ async function main(){
         if(data)
         console.log(data.name);
         else{
-            console.log("f")
+            console.log("f");
         }
     } catch (e) {
         console.error(e);
