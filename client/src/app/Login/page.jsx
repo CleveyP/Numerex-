@@ -1,12 +1,13 @@
 "use client";
 import { io } from 'socket.io-client';
+import {socket}
 import React, {useState} from "react";
 
 export default function LoginComponent(){
     let socket = io("http://localhost:8080"); //TODO: after deploying, make it right.
     const [userName, setUserName] = useState("");
     const [password, setPassword] = useState("");
-
+    
     const handleChange = ({target}) =>{
         setUserName(target.value);
         console.log(target.value);
@@ -16,7 +17,7 @@ export default function LoginComponent(){
         console.log(target.value);
     }
     const handleLogin = () => {
-        socket.emit('login-event', userName);
+        socket.emit('Login', userName);
     }
 
     return (

@@ -1,6 +1,9 @@
 const express = require('express');
 const app = express();
 const http = require('http');
+var bodyParser = require("body-parser");
+var path = require("path")
+var uuid = require('uuid-random');
 
 
 app.use(bodyParser.json());
@@ -12,12 +15,9 @@ app.use(function(req, res, next) {
 });
 
 //COde I got from https://github.com/bradstondevcode/simple-node-chat-server-starter-code/blob/master/server.js
-var bodyParser = require("body-parser");
-var path = require("path")
-var uuid = require('uuid-random');
 
-// Running our server on port 3080
-var PORT  = process.env.PORT || 3080
+// Running our server on port 8080
+var PORT  = process.env.PORT || 8080;
 
 var server = app.listen(PORT, function() {
   var host = server.address().address;
@@ -27,7 +27,9 @@ var server = app.listen(PORT, function() {
 
 var io = require('socket.io')(server);
 
-
+app.use("/", (req, res) =>{
+  res.send("hello world");
+} )
 
 var chatRoomData = [];
 var connectedClients = {};
@@ -43,6 +45,11 @@ io.on('connection', (client) => {
     //refresh everyone's chatbars so they see the new message
     sendUpdatedChatRoomData(client);
   })
+
+  client.on("Login", (username)=>{
+    console.log(username);
+   client.emit("recieveLogin", username);
+  });
 
    //Client entered The chat Room
    client.on("UserEnteredRoom", (userData) => {
